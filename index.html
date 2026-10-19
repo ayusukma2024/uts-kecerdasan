@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKSARA - Akademi Akuntansi SMK</title>
+    <!-- Font & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-sky-light">
+
+    <!-- LOGIN CONTAINER -->
+    <div id="login-screen" class="login-container">
+        <div class="cloud cloud-1"><i class="fa-solid fa-cloud"></i></div>
+        <div class="cloud cloud-2"><i class="fa-solid fa-cloud"></i></div>
+        <div class="cloud cloud-3"><i class="fa-solid fa-cloud"></i></div>
+
+        <div class="login-card glass-panel">
+            <div class="logo-circle">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <h1 class="brand-title">AKSARA</h1>
+            <p class="brand-subtitle">Akademi Akuntansi SMK</p>
+
+            <div class="role-selector-title">Masuk Sebagai:</div>
+            <div class="role-toggle">
+                <button type="button" class="role-btn active" id="btn-role-guru" onclick="selectRole('guru')">
+                    <i class="fa-solid fa-user-tie"></i> Guru
+                </button>
+                <button type="button" class="role-btn" id="btn-role-siswa" onclick="selectRole('siswa')">
+                    <i class="fa-solid fa-user-graduate"></i> Siswa
+                </button>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label for="username"><i class="fa-regular fa-user"></i> Nama Pengguna</label>
+                    <input type="text" id="username" placeholder="Masukkan nama Anda..." required autocomplete="off">
+                </div>
+
+                <div class="input-group" id="class-select-group" style="display: none;">
+                    <label for="user-class"><i class="fa-solid fa-school"></i> Pilih Kelas</label>
+                    <select id="user-class">
+                        <option value="X AKL 1">X AKL 1</option>
+                        <option value="X AKL 2">X AKL 2</option>
+                        <option value="X AKL 3">X AKL 3</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary-lg">
+                    <span>Masuk ke AKSARA</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="demo-notice">
+                <i class="fa-solid fa-circle-info"></i> Mode Demo Pengenalan. Tidak memerlukan pendaftaran publik/password. Data tersimpan di browser ini. Sediakan integrasi Firebase untuk penggunaan terpusat.
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP DASHBOARD CONTAINER -->
+    <div id="app-screen" class="app-container" style="display: none;">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div class="sidebar-title">
+                    <h2>AKSARA</h2>
+                    <span>Akademi Akuntansi SMK</span>
+                </div>
+            </div>
+
+            <div class="user-badge-sidebar">
+                <div class="user-avatar" id="sidebar-avatar">G</div>
+                <div class="user-info">
+                    <span class="user-name" id="sidebar-username">Guru Pengampu</span>
+                    <span class="user-role-tag" id="sidebar-userrole">Guru AKL</span>
+                </div>
+            </div>
+
+            <!-- MENU GURU -->
+            <nav class="nav-menu" id="menu-guru">
+                <div class="nav-section-title">UTAMA</div>
+                <a href="#" class="nav-link active" onclick="switchTab('guru-beranda')"><i class="fa-solid fa-chart-pie"></i> Beranda</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-perangkat')"><i class="fa-solid fa-folder-tree"></i> Perangkat Ajar</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-materi')"><i class="fa-solid fa-book-bookmark"></i> Materi Pembelajaran</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-aktivitas')"><i class="fa-solid fa-list-check"></i> Aktivitas Belajar</a>
+
+                <div class="nav-section-title">EVALUASI & AKADEMIK</div>
+                <a href="#" class="nav-link" onclick="switchTab('guru-kelas')"><i class="fa-solid fa-users"></i> Kelas & Siswa</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-lkpd')"><i class="fa-solid fa-file-pen"></i> Tugas & LKPD</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-kuis')"><i class="fa-solid fa-laptop-code"></i> Kuis & Evaluasi</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-penilaian')"><i class="fa-solid fa-check-double"></i> Penilaian Tugas</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-analisis')"><i class="fa-solid fa-chart-column"></i> Analisis Nilai</a>
+
+                <div class="nav-section-title">INFORMASI & SISTEM</div>
+                <a href="#" class="nav-link" onclick="switchTab('guru-pengumuman')"><i class="fa-solid fa-bullhorn"></i> Pengumuman</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-laporan')"><i class="fa-solid fa-file-invoice"></i> Laporan Nilai</a>
+                <a href="#" class="nav-link" onclick="switchTab('guru-pengaturan')"><i class="fa-solid fa-sliders"></i> Pengaturan Data</a>
+            </nav>
+
+            <!-- MENU SISWA -->
+            <nav class="nav-menu" id="menu-siswa" style="display: none;">
+                <div class="nav-section-title">MENU SISWA</div>
+                <a href="#" class="nav-link active" onclick="switchTab('siswa-beranda')"><i class="fa-solid fa-house"></i> Beranda Siswa</a>
+                <a href="#" class="nav-link" onclick="switchTab('siswa-materi')"><i class="fa-solid fa-book"></i> Materi Pembelajaran</a>
+                <a href="#" class="nav-link" onclick="switchTab('siswa-aktivitas')"><i class="fa-solid fa-shoe-prints"></i> Aktivitas Belajar</a>
+                <a href="#" class="nav-link" onclick="switchTab('siswa-lkpd')"><i class="fa-solid fa-file-signature"></i> Tugas & LKPD Saya</a>
+                <a href="#" class="nav-link" onclick="switchTab('siswa-kuis')"><i class="fa-solid fa-pen-to-square"></i> Kuis & Evaluasi</a>
+                <a href="#" class="nav-link" onclick="switchTab('siswa-nilai')"><i class="fa-solid fa-award"></i> Nilai & Progres</a>
+                <a href="#" class="nav-link" onclick="switchTab('siswa-pengumuman')"><i class="fa-solid fa-bell"></i> Pengumuman</a>
+                <a href="#" class="nav-link" onclick="switchTab('siswa-profil')"><i class="fa-solid fa-id-card"></i> Profil Saya</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <div class="topbar-title" id="page-title">Beranda Utama</div>
+                <div class="topbar-actions">
+                    <span class="academic-badge"><i class="fa-solid fa-graduation-cap"></i> TP 2026/2027</span>
+                    <button class="icon-btn" onclick="switchTab(currentUser.role === 'guru' ? 'guru-pengumuman' : 'siswa-pengumuman')">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- DYNAMIC VIEWS -->
+            <div class="content-body" id="content-body">
+                <!-- Views will be injected via JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL CONTAINER FOR CRUD -->
+    <div class="modal-overlay" id="global-modal" style="display: none;">
+        <div class="modal-card" id="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title">Judul Modal</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Form or dynamic detail content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
